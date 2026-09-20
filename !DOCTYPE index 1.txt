@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- โค้ดระบบพรีวิวลิงก์อัจฉริยะ (OG Image) สำหรับการแชร์ลงโซเชียลมีเดีย -->
+<meta property="og:title" content="👑 ดีลสุดปัง! แจกโค้ดโปรทุนน้อยรับได้ไม่จำกัด">
+<meta property="og:description" content="🎁 ฝากยอด 20 รับเลย 100 บาท / ทำยอด 400 ถอนได้ทันที 115 บาท คลิกเพื่อรับโบนัสด่วน!">
+<meta property="og:image" content="https://imgz.io">
+<meta property="og:url" content="https://supp88pg.com">
+<meta property="og:type" content="website">
+
+<style>
+/* 1. ตัวครอบหลัก (โปร่งแสง จำกัดพื้นที่ และเปิดมิติความลึก 3D) */
+.slider-wrapper {
+  background-color: transparent; 
+  overflow: hidden;             
+  width: 100%;
+  padding: 40px 0; 
+  perspective: 1000px; 
+}
+
+/* 2. กล่องแถวสไลด์การ์ดที่จะวิ่งยาวในแนวนอน */
+.scroll-container {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite; 
+}
+
+/* คอนเทนเนอร์ย่อยสำหรับจัดระยะห่างของการ์ดแต่ละใบ */
+.card-item-holder {
+  margin: 0 15px; 
+  display: block;
+}
+
+/* 3. กล่องครอบตัวการ์ดและเอฟเฟกต์กรอบไฟวิ่งนีออน */
+.img-box {
+  position: relative;
+  width: 320px;        
+  height: 520px;       
+  overflow: hidden;    
+  border-radius: 20px; 
+  background: #151515; 
+  
+  transform-style: preserve-3d;
+  filter: drop-shadow(0 0 10px rgba(255, 179, 0, 0.25)); 
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+              filter 0.5s ease;
+}
+
+/* 4. โครงสร้างแถบเส้นเอฟเฟกต์ไฟวิ่งนีออนหมุนวน 360 องศาโทนทองส้ม */
+.img-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    transparent, 
+    #ffb300, 
+    #f9d423, 
+    transparent 30%
+  );
+  animation: rotate-border 4s linear infinite;
+  z-index: 1;
+}
+
+/* 5. แผ่นกล่องชั้นในสำหรับกั้นขอบให้เหลือแค่เส้นนีออนรอบนอก */
+.img-box-inner {
+  position: absolute;
+  inset: 4px; 
+  background: #0f0f0f; 
+  border-radius: 17px;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  flex-direction: column; 
+}
+
+/* กล่องหน้าต่างควบคุมการสลับแสดงผลรูปภาพด้านบน */
+.promo-slider-container {
+  position: relative;
+  width: 100%;
+  height: 60%;        
+  background-color: #222;
+  overflow: hidden;
+}
+
+/* จัดเลเยอร์รูปภาพด้านในให้ซ้อนกันและเฟดเปลี่ยนนุ่มนวล */
+.promo-slider-container .slide-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%; 
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out; 
+}
+
+.promo-slider-container .slide-img.active {
+  opacity: 1;
+}
+
+/* ป้ายกำกับ HOT สีแดงเพลิงเรืองแสงมุมบนขวามือ */
+.hot-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #ff2a2a, #ff7600); 
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(255, 42, 42, 0.8); 
+  z-index: 4; 
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+  pointer-events: none; 
+}
+
+/* 6. พื้นที่กล่องข้อความบรรยายรายละเอียดโปรโมชันด้านล่าง */
+.promo-details {
+  width: 100%;
+  height: 25%;        
+  background: #0f0f0f; 
+  box-sizing: border-box;
+  padding: 12px 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;    
+  text-align: center;
+}
+
+.promo-details h3 {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  color: #ffb300;       
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+}
+
+.promo-details p {
+  margin: 0;
+  font-size: 11px;
+  color: #cccccc;       
+  line-height: 1.5;
+  font-family: 'Arial', sans-serif;
+}
+
+/* 7. แถบป้ายปุ่มกดแชร์ไปโซเชียลมีเดียส่วนท้ายการ์ด จัดกึ่งกลาง สมดุล 100% ทุกใบ */
+.share-bar {
+  width: 100%;
+  height: 15%;        
+  background: #090909; 
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;          
+  box-sizing: border-box;
+  padding: 0 10px;
+  z-index: 5;
+}
+
+/* ปรับเปลี่ยนคุณสมบัติปุ่มแชร์เป็นแท็กลิงก์ <a> ตรงๆ เพื่อเจาะระบบบล็อกป๊อปอัปของมือถือ */
+.share-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s ease;
+  color: #ffffff;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+  text-decoration: none; /* ลบเส้นใต้ลิงก์ */
+  cursor: pointer;
+}
+
+.share-btn:hover {
+  transform: scale(1.15); 
+}
+
+.btn-share-line { background-color: #06C755; }
+.btn-share-facebook { background-color: #1877F2; }
+.btn-share-x { background-color: #000000; border: 1px solid rgba(255,255,255,0.2); }
+.btn-share-copy { background-color: #ffb300; color: #000000; font-size: 9px; }
+
+/* --- แอนิเมชันควบคุมการทำงาน --- */
+@keyframes rotate-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.slider-wrapper:hover .scroll-container {
+  animation-play-state: paused;
+}
+
+.card-item-holder:hover .img-box {
+  transform: translateY(-12px) rotateX(6deg) rotateY(-3deg); 
+  filter: drop-shadow(0 15px 30px rgba(255, 179, 0, 0.6)) brightness(1.03);
+}
+
+@media (max-width: 480px) {
+  .card-item-holder { margin: 0 6px; }
+  .img-box { width: 260px; height: 440px; }
+  .promo-details h3 { font-size: 14px; }
+  .promo-details p { font-size: 10px; }
+  .share-btn { width: 28px; height: 28px; font-size: 9px; }
+}
+</style>
+</head>
+<body>
+
+<div class="slider-wrapper">
+  <div class="scroll-container" id="marquee-list-container">
+    
+    <!-- ================= การ์ดใบที่ 1 ================= -->
+    <div class="card-item-holder">
+      <div class="img-box">
+        <div class="img-box-inner">
+          <div class="promo-slider-container">
+            <div class="hot-badge">HOT</div>
+            <div class="slide-img active" style="background-image: url('https://s.imgz.io/2026/09/20/photo_2026-09-20_00-05-329db196a2df54f383.jpg');"></div>
+            <div class="slide-img" style="background-image: url('https://imgz.io');"></div>
+            <div class="slide-img" style="background-image: url('https://imgz.io');"></div>
+          </div>
+          <div class="promo-details">
+            <h3>ดีลเด็ด โปรทุนน้อยการ์ดที่ 1</h3>
+            <p>ฝากยอด 20 รับเลย 100 บาท<br>ทำยอด 400 ถอนได้ทันที 115 บาท</p>
+          </div>
+          
+          <!-- [แก้ไขแล้ว] อัปเดตลิงก์ระบบแชร์ตรงแบบสากลผ่านแท็ก <a> เพื่อเจาะระบบบล็อกป๊อปอัปชัวร์ 100% -->
+          <div class="share-bar">
+            <!-- แชร์ LINE ใหม่ (ระบบแชร์ข้อความตรงเข้าหน้าต่างแชต) -->
+            <a href="https://line.me" target="_blank" class="share-btn btn-share-line" title="แชร์ไปที่ LINE">LN</a>
+            <!-- แชร์ Facebook ใหม่ (แชร์ตรงเข้าฟีด) -->
+            <a href="https://facebook.com" target="_blank" class="share-btn btn-share-facebook" title="แชร์ไปที่ Facebook">FB</a>
+            <!-- แชร์ X ใหม่ -->
+            <a href="https://twitter.com" target="_blank" class="share-btn btn-share-x" title="แชร์ไปที่ X">X</a>
+            <!-- ปุ่ม COPY ลิงก์ -->
+            <button onclick="const text = 'https://supp88pg.com'; const btn = this; const dummy = document.createElement('textarea'); document.body.appendChild(dummy); dummy.value = text; dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); btn.textContent = 'DONE'; btn.style.backgroundColor = '#00ff66'; setTimeout(function(){ btn.textContent = 'COPY'; btn.style.backgroundColor = '#ffb300'; }, 2000);" class="share-btn btn-share-copy">COPY</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= การ์ดใบที่ 2 ================= -->
+    <div class="card-item-holder">
+      <div class="img-box">
+        <div class="img-box-inner">
+          <div class="promo-slider-container">
+            <div class="hot-badge">HOT</div>
+            <div class="slide-img active" style="background-image: url('https://imgz.io');"></div>
+            <div class="slide-img" style="background-image: url('https://imgz.io');"></div>
+            <div class="slide-img" style="background-image: url('https://imgz.io');"></div>
+          </div>
+          <div class="promo-details">
+            <h3>ดีลเด็ด โปรทุนน้อยการ์ดที่ 2</h3>
+            <p>ฝากยอด 20 รับเลย 100 บาท<br>ทำยอด 400 ถอนได้ทันที 115 บาท</p>
+          </div>
+          <div class="share-bar">
+            <a href="https://line.me" target="_blank" class="share-btn btn-share-line">LN</a>
+            <a href="https://facebook.com" target="_blank" class="share-btn btn-share-facebook">FB</a>
+            <a href="https://twitter.com" target="_blank" class="share-btn btn-share-x">X</a>
+            <button onclick="const text = 'https://supp88pg.com'; const btn = this; const dummy = document.createElement('textarea'); document.body.appendChild(dummy); dummy.value = text; dummy.select(); document.execCommand('copy'); document.body.removeChild(dummy); btn.textContent = 'DONE'; btn.style.backgroundColor = '#00ff66'; setTimeout(function(){ btn.textContent = 'COPY'; btn.style.backgroundColor = '#ffb300'; }, 2000);" class="share-btn btn-share-copy">COPY</button>
+          </div>
+        </div>
+      </div>
